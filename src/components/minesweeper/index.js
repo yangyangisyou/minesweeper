@@ -32,14 +32,12 @@ const onCloseGame = (x, y) => {
   console.log(x, y);
 };
 
-// const onExpandEmpty
-
 const handleMineStatus = () => {
 
 };
 
 const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
-  const [isGameStart] = useState(false);
+  const [isGameStart, setIsGameStart] = useState(false);
   const [mines, setMines] = useState(initialBoard(sizeOfBoard));
   // useEffect(() => {
   //   onStartGame(0, 0, numOfMines);
@@ -51,11 +49,8 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     while (minePool.length < numOfMines) {
       const xOfMine = Math.floor(Math.random() * sizeOfBoard);
       const yOfMine = Math.floor(Math.random() * sizeOfBoard);
-      if (xOfMine !== x && yOfMine !== y) {
-        minePool.push({
-          x: xOfMine,
-          y: yOfMine,
-        });
+      if (xOfMine !== x && yOfMine !== y && !minePool.find((coord) => coord.x === xOfMine && coord.y === yOfMine)) {
+        minePool.push({ x: xOfMine, y: yOfMine });
       }
     }
     let updatedMines = [...mines];
@@ -65,14 +60,41 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
         isMine: true,
       };
     });
-    console.log('minePool ', minePool);
-    console.log('updatedMines ', updatedMines);
     setMines(updatedMines);
+    setIsGameStart(true);
+    handleNumOfNeighbourMines();
+    onExpandEmptyMine(x, y);
+  };
+
+  const handleNumOfNeighbourMines = () => {
+    let updatedMines = [...mines];
+    for (let y = 0; y < sizeOfBoard; y++) {
+      for (let x = 0; x < sizeOfBoard; x++) {
+        let count = 0;
+        (y - 1 >= 0) && (x - 1 >= 0) && mines[y - 1][x - 1].isMine && count++;
+        (y - 1 >= 0) && mines[y - 1][x].isMine && count++;
+        (y - 1 >= 0) && (x + 1 < sizeOfBoard) && mines[y - 1][x + 1].isMine && count++;
+        (y + 1 < sizeOfBoard) && (x - 1 >= 0) && mines[y + 1][x - 1].isMine && count++;
+        (y + 1 < sizeOfBoard) && mines[y + 1][x].isMine && count++;
+        (y + 1 < sizeOfBoard) && (x + 1 < sizeOfBoard) && mines[y + 1][x + 1].isMine && count++;
+        (x - 1 >= 0) && mines[y][x - 1].isMine && count++;
+        (x + 1 < sizeOfBoard) && mines[y][x + 1].isMine && count++;
+        updatedMines[y][x] = {
+          ...mines[y][x],
+          numOfNeighbourMines: count,
+        };
+      }
+    }
+    setMines(updatedMines);
+  };
+
+  const onExpandEmptyMine = () => {
+    // mines
   };
 
   return (
     <BoardWrapper sizeOfBoard={ sizeOfBoard }>
-      { mines.map((lineOfMine) => lineOfMine.map((mine) => <Area isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } handleMineStatus={ handleMineStatus } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
+      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Area key={ `${column}-${row}` } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } handleMineStatus={ handleMineStatus } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
     </BoardWrapper>
   );
 };
