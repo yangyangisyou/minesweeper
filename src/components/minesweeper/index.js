@@ -1,14 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import styled, { css } from 'styled-components';
-import Area from './area';
+import Mine from './mine';
 import Modal from '../../shared/modal';
 
 const BoardWrapper = styled.div`
     display: grid;
-    max-width: calc(${(props) => props.sizeOfBoard} * 50px);
+    max-width: calc(${(props) => props.sizeOfBoard} * 55px);
     ${css`
         grid-template-columns: repeat(${(props) => props.sizeOfBoard}, 1fr);
         grid-template-rows: repeat(${(props) => props.sizeOfBoard}, 1fr);
+        grid-gap: 5px;
     `}
 `;
 
@@ -115,7 +116,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
 
   return (
     <BoardWrapper sizeOfBoard={ sizeOfBoard }>
-      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Area key={ `${column}-${row}` } isWin={ isWin } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
+      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Mine key={ `${column}-${row}` } isWin={ isWin } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
       <Modal text={ modalText } isVisible={ isShowGameOver || isWin } onClick={ () => initialBoard(sizeOfBoard) } okText={ modalOkText } />
     </BoardWrapper>
   );
