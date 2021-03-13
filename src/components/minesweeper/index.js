@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import Area from './area';
+import Modal from '../../shared/modal';
 
 const BoardWrapper = styled.div`
     display: grid;
@@ -28,10 +29,6 @@ const initialBoard = (sizeOfBoard) => {
   return mines;
 };
 
-const onCloseGame = (x, y) => {
-  console.log(x, y);
-};
-
 const handleMineStatus = () => {
 
 };
@@ -39,6 +36,7 @@ const handleMineStatus = () => {
 const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [mines, setMines] = useState(initialBoard(sizeOfBoard));
+  const [isShowGameOver, setIsShowGameOver] = useState(false);
   // useEffect(() => {
   //   onStartGame(0, 0, numOfMines);
   //   console.log('mines ', mines);
@@ -64,6 +62,11 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     setIsGameStart(true);
     handleNumOfNeighbourMines();
     onExpandEmptyMine(x, y);
+  };
+
+  const onCloseGame = (x, y) => {
+    console.log(x, y);
+    setIsShowGameOver(true);
   };
 
   const handleNumOfNeighbourMines = () => {
@@ -95,6 +98,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
   return (
     <BoardWrapper sizeOfBoard={ sizeOfBoard }>
       { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Area key={ `${column}-${row}` } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } handleMineStatus={ handleMineStatus } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
+      <Modal text="You clicked the mine!!" isVisible={ isShowGameOver } onClick={ () => setIsShowGameOver(false) } />
     </BoardWrapper>
   );
 };

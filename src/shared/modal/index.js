@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Button from './button';
+import Button from '../button';
 
 const ModalWrapper = styled.div`
     position: absolute;
@@ -18,8 +18,7 @@ const ModalWrapper = styled.div`
     .body {
         overflow: hidden;
         position: absolute;
-        width: 60vw;
-        height: 60vh;
+        padding: 20px;
         background-color: white;
         border-radius: 10px;
         display: flex;
@@ -27,20 +26,28 @@ const ModalWrapper = styled.div`
         justify-content: center;
         align-items: center;
     }
-    .loading-text {
+    .text {
         font-size: 24px;
         font-weight: 600;
-        margin: 10px auto;
+        margin: 20px;
     }
 `;
-const Modal = ({ text, okText, onClick }) => {
-  <ModalWrapper>
-    <div className="background" />
-    <div className="body">
-      <p className="text">{text}</p>
-      <Button onClick={ onClick }>{okText || 'OK'}</Button>
-    </div>
-  </ModalWrapper>;
+const Modal = ({
+  text, okText, onClick, isVisible
+}) => {
+  return (
+    <>
+      {isVisible && (
+        <ModalWrapper>
+          <div className="background" />
+          <div className="body">
+            <p className="text">{text}</p>
+            <Button onClick={ onClick }>{okText || 'OK'}</Button>
+          </div>
+        </ModalWrapper>
+      )}
+    </>
+  );
 };
 
 export default Modal;
