@@ -1,9 +1,9 @@
-import Minesweeper from './pages/minesweeper';
+import MinesweeperPage from './pages/minesweeper';
 
 const App = () => {
   return (
     <>
-      <Minesweeper />
+      <MinesweeperPage />
     </>
   );
 };
