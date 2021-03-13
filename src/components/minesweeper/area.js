@@ -1,19 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const AreaWrapper = styled.div`
-    background-color: white;
     width: 50px;
     height: 50px;
     outline: 1px black solid;
     cursor: pointer;
+    ${css`
+        background-color: ${(props) => props.isVisible && '#FFB366'};
+    `}
 `;
 
-const onClick = (x, y, isGameStart, isMine, onStartGame, onCloseGame, handleMineStatus) => {
+const onClick = (x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVisibleMine) => {
   if (isGameStart) {
     if (isMine) {
       onCloseGame();
     } else {
-      handleMineStatus();
+      onExpandVisibleMine(x, y);
     }
   } else {
     onStartGame(x, y);
@@ -21,16 +23,15 @@ const onClick = (x, y, isGameStart, isMine, onStartGame, onCloseGame, handleMine
 };
 
 const Area = ({
-  isMine, isDisplay, numOfNeighbourMines, isGameStart, onStartGame, onCloseGame, handleMineStatus, x, y
+  isMine, isVisible, numOfNeighbourMines, isGameStart, onStartGame, onCloseGame, x, y, onExpandVisibleMine
 }) => {
-  console.log(isMine, isDisplay, numOfNeighbourMines);
+//   console.log(isMine, isVisible, numOfNeighbourMines);
   return (
-    <AreaWrapper onClick={ () => onClick(x, y, isGameStart, isMine, onStartGame, onCloseGame, handleMineStatus) }>
+    <AreaWrapper isVisible={ isVisible } onClick={ () => onClick(x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVisibleMine) }>
       <>
         {
-            isMine && <span>💣</span>
+            isVisible && (isMine ? <span>💣</span> : <span>{numOfNeighbourMines}</span>)
         }
-        <span>{numOfNeighbourMines}</span>
       </>
     </AreaWrapper>
   );
