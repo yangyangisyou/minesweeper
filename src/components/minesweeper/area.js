@@ -23,14 +23,17 @@ const onClick = (x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVi
 };
 
 const Area = ({
-  isMine, isVisible, numOfNeighbourMines, isGameStart, onStartGame, onCloseGame, x, y, onExpandVisibleMine
+  isWin, isMine, isVisible, numOfNeighbourMines, isGameStart, onStartGame, onCloseGame, x, y, onExpandVisibleMine
 }) => {
-//   console.log(isMine, isVisible, numOfNeighbourMines);
   return (
     <AreaWrapper isVisible={ isVisible } onClick={ () => onClick(x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVisibleMine) }>
       <>
-        {
-            isVisible && (isMine ? <span>💣</span> : <span>{numOfNeighbourMines}</span>)
+        { isWin ? (
+          isMine
+            ? <span>💣</span>
+            : <span>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</span>
+        )
+          : (isVisible && (isMine ? <span>💣</span> : <span>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</span>))
         }
       </>
     </AreaWrapper>

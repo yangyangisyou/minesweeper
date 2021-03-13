@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import styled, { css } from 'styled-components';
 import Area from './area';
 import Modal from '../../shared/modal';
@@ -12,35 +12,32 @@ const BoardWrapper = styled.div`
     `}
 `;
 
-const initialBoard = (sizeOfBoard) => {
-  let mines = [];
-  for (let i = 0; i < sizeOfBoard; i++) {
-    let lineOfMine = [];
-    for (let j = 0; j < sizeOfBoard; j++) {
-      lineOfMine.push({
-        x: j,
-        y: i,
-        isMine: false,
-        isVisible: false,
-      });
-    }
-    mines.push(lineOfMine);
-  }
-  return mines;
-};
-
-const handleMineStatus = () => {
-
-};
-
 const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
   const [isGameStart, setIsGameStart] = useState(false);
-  const [mines, setMines] = useState(initialBoard(sizeOfBoard));
+  const [mines, setMines] = useState([[]]);
   const [isShowGameOver, setIsShowGameOver] = useState(false);
-  // useEffect(() => {
-  //   onStartGame(0, 0, numOfMines);
-  //   console.log('mines ', mines);
-  // });
+  const isWin = numOfMines === (sizeOfBoard ** 2 - mines.reduce((sumOfRow, rowOfMines) => sumOfRow + rowOfMines.reduce((sumOfColumn, targetMine) => sumOfColumn + (targetMine.isVisible ? 1 : 0), 0), 0));
+  const modalText = isWin ? 'You win!!' : (isShowGameOver ? 'You clicked the mine!!' : '');
+  const modalOkText = isWin ? 'Play again' : (isShowGameOver ? 'OK' : '');
+
+  const initialBoard = useCallback(() => {
+    let updatedMines = [];
+    for (let i = 0; i < sizeOfBoard; i++) {
+      let lineOfMine = [];
+      for (let j = 0; j < sizeOfBoard; j++) {
+        lineOfMine.push({
+          x: j,
+          y: i,
+          isMine: false,
+          isVisible: false,
+        });
+      }
+      updatedMines.push(lineOfMine);
+    }
+    setMines(updatedMines);
+    setIsShowGameOver(false);
+    setIsGameStart(false);
+  }, [sizeOfBoard]);
 
   const onStartGame = (x, y) => {
     let minePool = [];
@@ -93,13 +90,6 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
 
   const onExpandVisibleMine = (x, y) => {
     let updatedMines = [...mines];
-    // if (mines[y][x].numOfNeighbourMines > 0) {
-    //   updatedMines[y][x] = {
-    //     ...updatedMines[y][x],
-    //     isVisible: true,
-    //   };
-    // } else
-    // {
     const dx = [1, -1, 0, 0];
     const dy = [0, 0, 1, -1];
     let queue = [[y, x]];
@@ -107,37 +97,26 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
       let [yOfQueue, xOfQueue] = queue.shift();
       const isValid = (xOfQueue >= 0 && xOfQueue < sizeOfBoard && yOfQueue >= 0 && yOfQueue < sizeOfBoard);
       console.log(yOfQueue, xOfQueue);
-      if (isValid && (updatedMines[yOfQueue][xOfQueue].numOfNeighbourMines > 0 || updatedMines[yOfQueue][xOfQueue].isVisible)) {
-        updatedMines[yOfQueue][xOfQueue].isVisible = true;
-      } else if (isValid) {
-        updatedMines[yOfQueue][xOfQueue].isVisible = true;
-        for (let k = 0; k < dx.length; k++) {
-          queue.push([yOfQueue + dy[k], xOfQueue + dx[k]]);
+      if (isValid) {
+        if (!(updatedMines[yOfQueue][xOfQueue].numOfNeighbourMines > 0) && !(updatedMines[yOfQueue][xOfQueue].isVisible)) {
+          for (let k = 0; k < dx.length; k++) {
+            queue.push([yOfQueue + dy[k], xOfQueue + dx[k]]);
+          }
         }
+        updatedMines[yOfQueue][xOfQueue].isVisible = true;
       }
-
-      // let [x, y] = queue.shift();
-      // (y - 1 >= 0) && (x - 1 >= 0) && mines[y - 1][x - 1].numOfNeighbourMines === 0 && count++;
-      // (y - 1 >= 0) && mines[y - 1][x].isMine && count++;
-      // (y - 1 >= 0) && (x + 1 < sizeOfBoard) && mines[y - 1][x + 1].isMine && count++;
-      // (y + 1 < sizeOfBoard) && (x - 1 >= 0) && mines[y + 1][x - 1].isMine && count++;
-      // (y + 1 < sizeOfBoard) && mines[y + 1][x].isMine && count++;
-      // (y + 1 < sizeOfBoard) && (x + 1 < sizeOfBoard) && mines[y + 1][x + 1].isMine && count++;
-      // (x - 1 >= 0) && mines[y][x - 1].isMine && count++;
-      // (x + 1 < sizeOfBoard) && mines[y][x + 1].isMine && count++;
     }
-
-    //   }
-    // }
-    // }
-    console.log('updatedMines', updatedMines);
     setMines(updatedMines);
   };
 
+  useEffect(() => {
+    initialBoard();
+  }, [initialBoard]);
+
   return (
     <BoardWrapper sizeOfBoard={ sizeOfBoard }>
-      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Area key={ `${column}-${row}` } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } handleMineStatus={ handleMineStatus } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
-      <Modal text="You clicked the mine!!" isVisible={ isShowGameOver } onClick={ () => setIsShowGameOver(false) } />
+      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Area key={ `${column}-${row}` } isWin={ isWin } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
+      <Modal text={ modalText } isVisible={ isShowGameOver || isWin } onClick={ () => initialBoard(sizeOfBoard) } okText={ modalOkText } />
     </BoardWrapper>
   );
 };
