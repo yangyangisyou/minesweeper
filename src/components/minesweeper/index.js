@@ -65,7 +65,12 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
   };
 
   const onCloseGame = (x, y) => {
-    console.log(x, y);
+    let updatedMines = [...mines];
+    updatedMines[y][x] = {
+      ...updatedMines[y][x],
+      isVisible: true,
+    };
+    setMines(updatedMines);
     setIsShowGameOver(true);
   };
 
@@ -99,7 +104,6 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     while (queue.length > 0) {
       let [yOfQueue, xOfQueue] = queue.shift();
       const isNotOutOfBound = (xOfQueue >= 0 && xOfQueue < sizeOfBoard && yOfQueue >= 0 && yOfQueue < sizeOfBoard);
-      console.log(yOfQueue, xOfQueue);
       if (isNotOutOfBound) {
         const isEmptyMine = !(updatedMines[yOfQueue][xOfQueue].numOfNeighbourMines > 0) && !(updatedMines[yOfQueue][xOfQueue].isVisible);
         if (isEmptyMine) {
@@ -113,13 +117,35 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     setMines(updatedMines);
   };
 
+  const onUserClick = (x, y, isMine, isFlag) => {
+    if (isGameStart && !isFlag) {
+      if (isMine) {
+        onCloseGame(x, y);
+      } else {
+        onExpandVisibleMine(x, y);
+      }
+    } else if (!isFlag) {
+      onStartGame(x, y);
+    }
+  };
+
+  const onRightClick = (element, x, y) => {
+    element.preventDefault();
+    let updatedMines = [...mines];
+    updatedMines[y][x] = {
+      ...updatedMines[y][x],
+      isFlag: true,
+    };
+    setMines(updatedMines);
+  };
+
   useEffect(() => {
     initialBoard();
   }, [initialBoard]);
-
+  console.log('mines ', mines);
   return (
     <BoardWrapper sizeOfBoard={ sizeOfBoard }>
-      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Mine key={ `${column}-${row}` } isWin={ isWin } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
+      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Mine key={ `${column}-${row}` } onClick={ onUserClick } onContextMenu={ onRightClick } isWin={ isWin } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
       <Modal text={ modalText } isVisible={ isShowGameOver || isWin } onClick={ () => initialBoard(sizeOfBoard) } okText={ modalOkText } />
     </BoardWrapper>
   );

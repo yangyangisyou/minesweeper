@@ -13,7 +13,7 @@ const MineWrapper = styled.div`
     font-size: 20px;
     font-weight: 600;
     ${css`
-        background-color: ${(props) => (props.isVisible ? '#dff7f5' : '#0092e0')};
+        background-color: ${({ isVisible, isBoom }) => (isBoom ? 'red' : (isVisible ? '#dff7f5' : '#0092e0'))};
     `}
 `;
 
@@ -25,31 +25,26 @@ const Cell = styled.div`
   )}
 `;
 
-const onClick = (x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVisibleMine) => {
-  if (isGameStart) {
-    if (isMine) {
-      onCloseGame();
-    } else {
-      onExpandVisibleMine(x, y);
-    }
+const cellText = (isFlag, isMine, isVisible, isWin, numOfNeighbourMines) => {
+  if (isFlag) {
+    return '🚩';
+  } else if (isWin || (isMine && isVisible)) {
+    return '💣';
+  } else if (isWin || isVisible) {
+    return numOfNeighbourMines || '';
   } else {
-    onStartGame(x, y);
+    return '';
   }
 };
 
 const Mine = ({
-  isWin, isMine, isVisible, numOfNeighbourMines, isGameStart, onStartGame, onCloseGame, x, y, onExpandVisibleMine
+  isWin, isMine, isVisible, numOfNeighbourMines, x, y, onContextMenu, onClick, isFlag
 }) => {
+  const isBoom = isVisible && isMine;
   return (
-    <MineWrapper isVisible={ isVisible } onClick={ () => onClick(x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVisibleMine) }>
+    <MineWrapper isVisible={ isVisible } isBoom={ isBoom } onClick={ () => onClick(x, y, isMine, isFlag) } onContextMenu={ (element) => onContextMenu(element, x, y, isFlag) }>
       <>
-        { isWin ? (
-          isMine
-            ? <Cell text="💣">💣</Cell>
-            : <Cell text={ numOfNeighbourMines }>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</Cell>
-        )
-          : (isVisible && (isMine ? <Cell text="💣">💣</Cell> : <Cell text={ numOfNeighbourMines }>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</Cell>))
-        }
+        <Cell text={ cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines) }>{cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines)}</Cell>
       </>
     </MineWrapper>
   );
