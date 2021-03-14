@@ -4,18 +4,20 @@ import Mine from './mine';
 import Modal from '../../shared/modal';
 
 const BoardWrapper = styled.div`
-    display: grid;
-    max-width: calc(${(props) => props.sizeOfBoard} * 55px);
-    ${css`
-        grid-template-columns: repeat(${(props) => props.sizeOfBoard}, 1fr);
-        grid-template-rows: repeat(${(props) => props.sizeOfBoard}, 1fr);
+    ${({ sizeOfBoard }) => (
+    css`
+        display: grid;
+        max-width: calc(${sizeOfBoard} * 55px);
         grid-gap: 5px;
-    `}
+        grid-template-columns: repeat(${sizeOfBoard}, 1fr);
+        grid-template-rows: repeat(${sizeOfBoard}, 1fr);
+      `
+  )}
 `;
 
 const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
-  const [isGameStart, setIsGameStart] = useState(false);
   const [mines, setMines] = useState([[]]);
+  const [isGameStart, setIsGameStart] = useState(false);
   const [isShowGameOver, setIsShowGameOver] = useState(false);
   const isWin = numOfMines === (sizeOfBoard ** 2 - mines.reduce((sumOfRow, rowOfMines) => sumOfRow + rowOfMines.reduce((sumOfColumn, targetMine) => sumOfColumn + (targetMine.isVisible ? 1 : 0), 0), 0));
   const modalText = isWin ? 'You win!!' : (isShowGameOver ? 'You clicked the mine!!' : '');
@@ -96,10 +98,11 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     let queue = [[y, x]];
     while (queue.length > 0) {
       let [yOfQueue, xOfQueue] = queue.shift();
-      const isValid = (xOfQueue >= 0 && xOfQueue < sizeOfBoard && yOfQueue >= 0 && yOfQueue < sizeOfBoard);
+      const isNotOutOfBound = (xOfQueue >= 0 && xOfQueue < sizeOfBoard && yOfQueue >= 0 && yOfQueue < sizeOfBoard);
       console.log(yOfQueue, xOfQueue);
-      if (isValid) {
-        if (!(updatedMines[yOfQueue][xOfQueue].numOfNeighbourMines > 0) && !(updatedMines[yOfQueue][xOfQueue].isVisible)) {
+      if (isNotOutOfBound) {
+        const isEmptyMine = !(updatedMines[yOfQueue][xOfQueue].numOfNeighbourMines > 0) && !(updatedMines[yOfQueue][xOfQueue].isVisible);
+        if (isEmptyMine) {
           for (let k = 0; k < dx.length; k++) {
             queue.push([yOfQueue + dy[k], xOfQueue + dx[k]]);
           }

@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { COLOR } from '../../config/var';
 
 const MineWrapper = styled.div`
     width: 50px;
@@ -15,7 +16,15 @@ const MineWrapper = styled.div`
         background-color: ${(props) => (props.isVisible ? '#dff7f5' : '#0092e0')};
     `}
 `;
-// #b2edec
+
+const Cell = styled.div`
+  ${(props) => (
+    css`
+      color: ${COLOR.numOfMines[props.text] || 'black'}
+    `
+  )}
+`;
+
 const onClick = (x, y, isGameStart, isMine, onStartGame, onCloseGame, onExpandVisibleMine) => {
   if (isGameStart) {
     if (isMine) {
@@ -36,10 +45,10 @@ const Mine = ({
       <>
         { isWin ? (
           isMine
-            ? <div>💣</div>
-            : <div>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</div>
+            ? <Cell text="💣">💣</Cell>
+            : <Cell text={ numOfNeighbourMines }>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</Cell>
         )
-          : (isVisible && (isMine ? <div>💣</div> : <div>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</div>))
+          : (isVisible && (isMine ? <Cell text="💣">💣</Cell> : <Cell text={ numOfNeighbourMines }>{numOfNeighbourMines !== 0 ? numOfNeighbourMines : ''}</Cell>))
         }
       </>
     </MineWrapper>
