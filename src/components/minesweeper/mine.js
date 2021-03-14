@@ -19,9 +19,7 @@ const MineWrapper = styled.div`
 
 const Cell = styled.div`
   ${(props) => (
-    css`
-      color: ${COLOR.numOfMines[props.text] || 'black'}
-    `
+    css` color: ${COLOR.numOfMines[props.text] || 'black'}`
   )}
 `;
 
@@ -38,14 +36,18 @@ const cellText = (isFlag, isMine, isVisible, isWin, numOfNeighbourMines) => {
 };
 
 const Mine = ({
-  isWin, isMine, isVisible, numOfNeighbourMines, x, y, onContextMenu, onClick, isFlag
+  x, y, isFlag, isMine, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines
 }) => {
   const isBoom = isVisible && isMine;
+  const text = cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines);
   return (
-    <MineWrapper isVisible={ isVisible } isBoom={ isBoom } onClick={ () => onClick(x, y, isMine, isFlag) } onContextMenu={ (element) => onContextMenu(element, x, y, isFlag) }>
-      <>
-        <Cell text={ cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines) }>{cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines)}</Cell>
-      </>
+    <MineWrapper
+      isVisible={ isVisible }
+      isBoom={ isBoom }
+      onClick={ () => onClick(x, y, isMine, isFlag) }
+      onContextMenu={ (element) => onContextMenu(element, x, y, isFlag) }
+    >
+      <Cell text={ text }>{text}</Cell>
     </MineWrapper>
   );
 };

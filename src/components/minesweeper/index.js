@@ -142,11 +142,24 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
   useEffect(() => {
     initialBoard();
   }, [initialBoard]);
-  console.log('mines ', mines);
+
   return (
     <BoardWrapper sizeOfBoard={ sizeOfBoard }>
-      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => <Mine key={ `${column}-${row}` } onClick={ onUserClick } onContextMenu={ onRightClick } isWin={ isWin } isGameStart={ isGameStart } onStartGame={ onStartGame } onCloseGame={ onCloseGame } onExpandVisibleMine={ onExpandVisibleMine } sizeOfBoard={ sizeOfBoard } { ...mine } />)) }
-      <Modal text={ modalText } isVisible={ isShowGameOver || isWin } onClick={ () => initialBoard(sizeOfBoard) } okText={ modalOkText } />
+      { mines.map((lineOfMine, row) => lineOfMine.map((mine, column) => (
+        <Mine
+          isWin={ isWin }
+          key={ `${column}-${row}` }
+          onClick={ onUserClick }
+          onContextMenu={ onRightClick }
+          { ...mine }
+        />
+      ))) }
+      <Modal
+        text={ modalText }
+        okText={ modalOkText }
+        isVisible={ isShowGameOver || isWin }
+        onClick={ () => initialBoard(sizeOfBoard) }
+      />
     </BoardWrapper>
   );
 };
