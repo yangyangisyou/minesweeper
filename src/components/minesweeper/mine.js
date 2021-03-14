@@ -26,7 +26,7 @@ const Cell = styled.div`
 const cellText = (isFlag, isMine, isVisible, isWin, numOfNeighbourMines) => {
   if (isFlag) {
     return '🚩';
-  } else if (isWin || (isMine && isVisible)) {
+  } else if ((isMine && isWin) || (isMine && isVisible)) {
     return '💣';
   } else if (isWin || isVisible) {
     return numOfNeighbourMines || '';

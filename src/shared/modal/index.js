@@ -29,11 +29,15 @@ const ModalWrapper = styled.div`
     .text {
         font-size: 24px;
         font-weight: 600;
-        margin: 20px;
+        margin: 10px;
+    }
+    .img {
+      margin: 10px;
+      height: 200px;
     }
 `;
 const Modal = ({
-  text, okText, onClick, isVisible
+  text, okText, onClick, isVisible, imgSrc
 }) => {
   return (
     <>
@@ -42,6 +46,7 @@ const Modal = ({
           <div className="background" />
           <div className="body">
             <p className="text">{text}</p>
+            <img className="img" src={ imgSrc } alt="modal" />
             <Button onClick={ onClick }>{okText || 'OK'}</Button>
           </div>
         </ModalWrapper>
