@@ -23,32 +23,32 @@ When user click the bomb.
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
 Minesweeper board includes a set of mines.
 
-#### initialBoard()
-Initialize the Mines status.
+1. initialBoard()
+* Initialize the Mines status.
 
-#### onExpandVisibleMine()
-Handle the mine's empty neighbour visible.
+2. onExpandVisibleMine()
+* Handle the mine's empty neighbour visible.
 
-#### handleNumOfNeighbourMines()
-Count sum of the neighbour's bombs.
+3. handleNumOfNeighbourMines()
+* Count sum of the neighbour's bombs.
 
-#### onStartGame(x, y)
-Start the game while user is clicking first.
+4. onStartGame(x, y)
+* Start the game while user is clicking first.
 
-#### onCloseGame(x, y)
-Start the game while user is clicking the bomb.
+5. onCloseGame(x, y)
+* Start the game while user is clicking the bomb.
 
-#### onUserClick(x, y, isMine, isFlag)
-User left click the mine for choose the mine.
+6. onUserClick(x, y, isMine, isFlag)
+* User left click the mine for choose the mine.
 
-#### onRightClick(element, x, y)
-User right click the mine for mark the flag.
+7. onRightClick(element, x, y)
+* User right click the mine for mark the flag.
 
 ### Mine: (x, y, isFlag, isMine, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines)
 Mine has different status, includes isFlag, isMine, isVisible and numOfNeighbourMines.
 
-#### cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines)
-Generate the mine status.
+1. cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines)
+* Generate the mine status.
 
 ### How to run
 1. Install dependencies
