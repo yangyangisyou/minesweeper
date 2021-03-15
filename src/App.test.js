@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import App from './App';
+import MinesweeperPage from './pages/minesweeper';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+it('renders the Minesweeper board', () => {
+  render(<MinesweeperPage />);
+  const linkElement = screen.getByText(/Minesweeper/i);
+  expect(linkElement.textContent).toBe('Minesweeper');
 });
