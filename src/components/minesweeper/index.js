@@ -60,7 +60,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     });
     setMines(updatedMines);
     setIsGameStart(true);
-    handleNumOfNeighbourMines();
+    countNumOfNeighbourMines();
     onExpandVisibleMine(x, y);
   };
 
@@ -74,7 +74,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     setIsShowGameOver(true);
   };
 
-  const handleNumOfNeighbourMines = () => {
+  const countNumOfNeighbourMines = () => {
     let updatedMines = [...mines];
     for (let y = 0; y < sizeOfBoard; y++) {
       for (let x = 0; x < sizeOfBoard; x++) {

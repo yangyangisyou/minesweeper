@@ -34,6 +34,21 @@ When user click the bomb, then user fails the game.
 ## Flow chart
 ![](https://upload.cc/i1/2021/03/16/Y1rpj0.png)
 
+## Diagram
+### Overview
+![](https://upload.cc/i1/2021/03/16/kIRVXP.png)
+
+### onUserClick
+![](https://upload.cc/i1/2021/03/16/izL5ZK.png)
+
+### onUserRightClick
+![](https://upload.cc/i1/2021/03/16/lfcAzJ.png)
+
+### countNumOfNeighbourMines
+![](https://upload.cc/i1/2021/03/16/zC71OE.png)
+
+### onExpandVisibleMine
+![](https://upload.cc/i1/2021/03/16/Mktxc9.png)
 
 ## Components
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
@@ -45,7 +60,7 @@ Minesweeper board includes a set of mines.
 2. onExpandVisibleMine()
 * Handle the mine's empty neighbour visible.
 
-3. handleNumOfNeighbourMines()
+3. countNumOfNeighbourMines()
 * Count sum of the neighbour's bombs.
 
 4. onStartGame(x, y)
