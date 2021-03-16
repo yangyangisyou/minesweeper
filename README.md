@@ -34,6 +34,7 @@ When user click the bomb, then user fails the game.
 ## Flow chart
 ![](https://upload.cc/i1/2021/03/16/Y1rpj0.png)
 
+
 ## Components
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
 Minesweeper board includes a set of mines.
