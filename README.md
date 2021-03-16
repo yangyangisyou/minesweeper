@@ -48,7 +48,7 @@ When user click the bomb, then user fails the game.
 ![](https://upload.cc/i1/2021/03/16/zC71OE.png)
 
 ### onExpandVisibleMine
-![](https://upload.cc/i1/2021/03/16/p3qJQ7.png)
+![](https://upload.cc/i1/2021/03/16/q4NuPT.png)
 
 ## Components
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
