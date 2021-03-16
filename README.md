@@ -1,6 +1,25 @@
-# Minesweeper
+# Minesweeper - a classic game
 This project is based on react.js and styled-components.
 You can play on [this page](https://minesweeper.yyisyou.tw).
+<img src="https://upload.cc/i1/2021/03/16/oIgJiY.png" height="400px"> 
+
+## How to play
+### Click mine
+When user click a mine, it would expend its area util number of neighbour not zero.  
+<img src="https://upload.cc/i1/2021/03/16/hpJUDE.png" height="400px"> 
+
+### Use flag
+User can use flag to predict which mine includes bomb.  
+<img src="https://upload.cc/i1/2021/03/16/Koe15L.png" height="400px"> 
+
+### Win the game
+When user spreads all the empty mines, then user wins the game and show all of bombs.  
+<img src="https://upload.cc/i1/2021/03/16/OIQkCD.png" height="400px"> 
+
+
+### Fail the game
+When user click the bomb, then user fails the game.  
+<img src="https://upload.cc/i1/2021/03/16/5LAgvk.png" height="400px"> 
 
 ## Tech stack
 <p float="left" margin="10px">
@@ -11,13 +30,6 @@ You can play on [this page](https://minesweeper.yyisyou.tw).
 
 * React.js 17.0.1  
 * styled-components 5.2.1  
-
-## Rules
-### Win
-When user spreads all the empty mines.
-
-### Fail
-When user click the bomb.
 
 ## Components
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
