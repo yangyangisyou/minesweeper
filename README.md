@@ -56,7 +56,7 @@ Minesweeper board includes a set of mines.
 6. onUserClick(x, y, isBomb, isFlag)
 * User left click the mine for choose the mine.
 
-7. onRightClick(element, x, y)
+7. onRightClick(x, y, isFlag, element)
 * User right click the mine for mark the flag.
 
 ### Mine: (x, y, isFlag, isBomb, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines)
@@ -76,6 +76,10 @@ npm install
 npm run start
 ```
 
+3. Open the link, the default port is 3000
+```
+http://localhost:3000
+```
 
 
 
