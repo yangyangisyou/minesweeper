@@ -129,12 +129,12 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     }
   };
 
-  const onRightClick = (element, x, y) => {
-    element.preventDefault();
+  const onRightClick = (x, y, isFlag, element) => {
+    element && element.preventDefault();
     let updatedMines = [...mines];
     updatedMines[y][x] = {
       ...updatedMines[y][x],
-      isFlag: true,
+      isFlag: !isFlag,
     };
     setMines(updatedMines);
   };
@@ -150,7 +150,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
           isWin={ isWin }
           key={ `${column}-${row}` }
           onClick={ onUserClick }
-          onContextMenu={ onRightClick }
+          onRightClick={ onRightClick }
           { ...mine }
         />
       ))) }

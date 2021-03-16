@@ -7,13 +7,12 @@ const PageWrapper = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 5vh 5vw;
     background-color: #d1fdac;
     height: 100vh;
     .title {
         font-size: 32px;
         font-weight: 500;
-        margin: 20px;
+        margin: 40px 20px;
     }
 `;
 const MinesweeperPage = () => {

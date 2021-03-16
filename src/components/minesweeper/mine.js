@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import { COLOR } from '../../config/var';
+import useLongPress from '../../util/useLongPress.js';
 
 const MineWrapper = styled.div`
     width: 50px;
@@ -36,16 +37,18 @@ const cellText = (isFlag, isMine, isVisible, isWin, numOfNeighbourMines) => {
 };
 
 const Mine = ({
-  x, y, isFlag, isMine, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines
+  x, y, isFlag, isMine, isVisible, isWin, onRightClick, onClick, numOfNeighbourMines
 }) => {
   const isBoom = isVisible && isMine;
   const text = cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines);
+  const userLongPress = useLongPress(() => onRightClick(x, y, isFlag), 800);
   return (
     <MineWrapper
       isVisible={ isVisible }
       isBoom={ isBoom }
       onClick={ () => onClick(x, y, isMine, isFlag) }
-      onContextMenu={ (element) => onContextMenu(element, x, y, isFlag) }
+      onContextMenu={ (element) => onRightClick(x, y, isFlag, element) }
+      { ...userLongPress }
     >
       <Cell text={ text }>{text}</Cell>
     </MineWrapper>
