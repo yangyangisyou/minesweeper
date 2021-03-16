@@ -1,6 +1,6 @@
 # Minesweeper - a classic game
-This project is based on react.js and styled-components.
-You can play on [this page](https://minesweeper.yyisyou.tw).
+This project is based on react.js and styled-components.  
+You can play on [this page](https://minesweeper.yyisyou.tw).  
 <img src="https://upload.cc/i1/2021/03/16/oIgJiY.png" height="400px"> 
 
 ## How to play
