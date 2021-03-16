@@ -20,7 +20,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
   const [isGameStart, setIsGameStart] = useState(false);
   const [isShowGameOver, setIsShowGameOver] = useState(false);
   const isWin = !isShowGameOver && numOfMines === (sizeOfBoard ** 2 - mines.reduce((sumOfRow, rowOfMines) => sumOfRow + rowOfMines.reduce((sumOfColumn, targetMine) => sumOfColumn + (targetMine.isVisible ? 1 : 0), 0), 0));
-  const modalText = isWin ? 'You win!!' : (isShowGameOver ? 'You clicked the mine!!' : '');
+  const modalText = isWin ? 'You win!!' : (isShowGameOver ? 'You clicked the bomb!!' : '');
   const modalOkText = isWin ? 'Play again' : (isShowGameOver ? 'OK' : '');
   const modalImage = isWin ? 'https://media3.giphy.com/media/qYGvebgOKGygdQgflY/giphy.gif?cid=ecf05e47i0qme2wi67ynw5qtcvav9yxuzpgvg3cvwimwob4o&rid=giphy.gif' : isShowGameOver ? 'https://media0.giphy.com/media/11KSh7jeHLEp5m/giphy.gif?cid=ecf05e47o4nh1dozkvly9x6bfcbv19gbhqqui2jw1zb9bcem&rid=giphy.gif' : '';
   const initialBoard = useCallback(() => {
