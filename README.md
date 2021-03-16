@@ -73,6 +73,10 @@ npm install
 npm run start
 ```
 
+3. Open the link, the default port is 3000
+```
+http://localhost:3000
+```
 
 
 
