@@ -24,10 +24,10 @@ const Cell = styled.div`
   )}
 `;
 
-const cellText = (isFlag, isMine, isVisible, isWin, numOfNeighbourMines) => {
+const cellText = (isFlag, isBomb, isVisible, isWin, numOfNeighbourMines) => {
   if (isFlag) {
     return '🚩';
-  } else if ((isMine && isWin) || (isMine && isVisible)) {
+  } else if ((isBomb && isWin) || (isBomb && isVisible)) {
     return '💣';
   } else if (isWin || isVisible) {
     return numOfNeighbourMines || '';
@@ -37,16 +37,16 @@ const cellText = (isFlag, isMine, isVisible, isWin, numOfNeighbourMines) => {
 };
 
 const Mine = ({
-  x, y, isFlag, isMine, isVisible, isWin, onRightClick, onClick, numOfNeighbourMines
+  x, y, isFlag, isBomb, isVisible, isWin, onRightClick, onClick, numOfNeighbourMines
 }) => {
-  const isBoom = isVisible && isMine;
-  const text = cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines);
+  const isBoom = isVisible && isBomb;
+  const text = cellText(isFlag, isBomb, isVisible, isWin, numOfNeighbourMines);
   const userLongPress = useLongPress(() => onRightClick(x, y, isFlag), 800);
   return (
     <MineWrapper
       isVisible={ isVisible }
       isBoom={ isBoom }
-      onClick={ () => onClick(x, y, isMine, isFlag) }
+      onClick={ () => onClick(x, y, isBomb, isFlag) }
       onContextMenu={ (element) => onRightClick(x, y, isFlag, element) }
       { ...userLongPress }
     >

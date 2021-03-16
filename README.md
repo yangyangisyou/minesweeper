@@ -31,6 +31,9 @@ When user click the bomb, then user fails the game.
 * React.js 17.0.1  
 * styled-components 5.2.1  
 
+## Flow chart
+![](https://upload.cc/i1/2021/03/16/Y1rpj0.png)
+
 ## Components
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
 Minesweeper board includes a set of mines.
@@ -50,16 +53,16 @@ Minesweeper board includes a set of mines.
 5. onCloseGame(x, y)
 * Start the game while user is clicking the bomb.
 
-6. onUserClick(x, y, isMine, isFlag)
+6. onUserClick(x, y, isBomb, isFlag)
 * User left click the mine for choose the mine.
 
 7. onRightClick(element, x, y)
 * User right click the mine for mark the flag.
 
-### Mine: (x, y, isFlag, isMine, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines)
-Mine has different status, includes isFlag, isMine, isVisible and numOfNeighbourMines.
+### Mine: (x, y, isFlag, isBomb, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines)
+Mine has different status, includes isFlag, isBomb, isVisible and numOfNeighbourMines.
 
-1. cellText(isFlag, isMine, isVisible, isWin, numOfNeighbourMines)
+1. cellText(isFlag, isBomb, isVisible, isWin, numOfNeighbourMines)
 * Generate the mine status.
 
 ### How to run

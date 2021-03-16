@@ -31,7 +31,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
         lineOfMine.push({
           x: j,
           y: i,
-          isMine: false,
+          isBomb: false,
           isVisible: false,
         });
       }
@@ -55,7 +55,7 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     minePool.forEach((mine) => {
       updatedMines[mine.y][mine.x] = {
         ...updatedMines[mine.y][mine.x],
-        isMine: true,
+        isBomb: true,
       };
     });
     setMines(updatedMines);
@@ -79,14 +79,14 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     for (let y = 0; y < sizeOfBoard; y++) {
       for (let x = 0; x < sizeOfBoard; x++) {
         let count = 0;
-        (y - 1 >= 0) && (x - 1 >= 0) && mines[y - 1][x - 1].isMine && count++;
-        (y - 1 >= 0) && mines[y - 1][x].isMine && count++;
-        (y - 1 >= 0) && (x + 1 < sizeOfBoard) && mines[y - 1][x + 1].isMine && count++;
-        (y + 1 < sizeOfBoard) && (x - 1 >= 0) && mines[y + 1][x - 1].isMine && count++;
-        (y + 1 < sizeOfBoard) && mines[y + 1][x].isMine && count++;
-        (y + 1 < sizeOfBoard) && (x + 1 < sizeOfBoard) && mines[y + 1][x + 1].isMine && count++;
-        (x - 1 >= 0) && mines[y][x - 1].isMine && count++;
-        (x + 1 < sizeOfBoard) && mines[y][x + 1].isMine && count++;
+        (y - 1 >= 0) && (x - 1 >= 0) && mines[y - 1][x - 1].isBomb && count++;
+        (y - 1 >= 0) && mines[y - 1][x].isBomb && count++;
+        (y - 1 >= 0) && (x + 1 < sizeOfBoard) && mines[y - 1][x + 1].isBomb && count++;
+        (y + 1 < sizeOfBoard) && (x - 1 >= 0) && mines[y + 1][x - 1].isBomb && count++;
+        (y + 1 < sizeOfBoard) && mines[y + 1][x].isBomb && count++;
+        (y + 1 < sizeOfBoard) && (x + 1 < sizeOfBoard) && mines[y + 1][x + 1].isBomb && count++;
+        (x - 1 >= 0) && mines[y][x - 1].isBomb && count++;
+        (x + 1 < sizeOfBoard) && mines[y][x + 1].isBomb && count++;
         updatedMines[y][x] = {
           ...mines[y][x],
           numOfNeighbourMines: count,
@@ -117,14 +117,14 @@ const Minesweeper = ({ sizeOfBoard, numOfMines }) => {
     setMines(updatedMines);
   };
 
-  const onUserClick = (x, y, isMine, isFlag) => {
-    if (isGameStart && !isFlag) {
-      if (isMine) {
+  const onUserClick = (x, y, isBomb, isFlag) => {
+    if (isGameStart) {
+      if (isBomb && !isFlag) {
         onCloseGame(x, y);
-      } else {
+      } else if (!isFlag) {
         onExpandVisibleMine(x, y);
       }
-    } else if (!isFlag) {
+    } else {
       onStartGame(x, y);
     }
   };
