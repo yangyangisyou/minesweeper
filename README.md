@@ -53,7 +53,7 @@ Minesweeper board includes a set of mines.
 6. onUserClick(x, y, isMine, isFlag)
 * User left click the mine for choose the mine.
 
-7. onRightClick(element, x, y)
+7. onRightClick(x, y, isFlag, element)
 * User right click the mine for mark the flag.
 
 ### Mine: (x, y, isFlag, isMine, isVisible, isWin, onContextMenu, onClick, numOfNeighbourMines)
