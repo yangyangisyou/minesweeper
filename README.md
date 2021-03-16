@@ -32,7 +32,6 @@ When user click the bomb, then user fails the game.
 * styled-components 5.2.1  
 
 ## Flow chart
-![](https://upload.cc/i1/2021/03/16/jHgkL2.png)
 ![](https://upload.cc/i1/2021/03/16/Y1rpj0.png)
 
 ## Diagram
@@ -61,6 +60,7 @@ When user click the bomb, then user fails the game.
 
 
 ## Components
+![](https://upload.cc/i1/2021/03/16/jHgkL2.png)
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
 Minesweeper board includes a set of mines.
 
