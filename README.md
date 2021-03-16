@@ -32,6 +32,7 @@ When user click the bomb, then user fails the game.
 * styled-components 5.2.1  
 
 ## Flow chart
+![](https://upload.cc/i1/2021/03/16/jHgkL2.png)
 ![](https://upload.cc/i1/2021/03/16/Y1rpj0.png)
 
 ## Diagram
@@ -49,6 +50,15 @@ When user click the bomb, then user fails the game.
 
 ### onExpandVisibleMine
 ![](https://upload.cc/i1/2021/03/16/q4NuPT.png)
+
+## Explian
+### Mine
+1. 🚩: flag
+
+2. 💣: bomb
+
+3. 1 to 8: number of neighbour bombs
+
 
 ## Components
 ### Minesweeper Board: (sizeOfBoard, numOfMines)
