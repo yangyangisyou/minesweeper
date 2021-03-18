@@ -31,6 +31,9 @@ When user click the bomb, then user fails the game.
 * React.js 17.0.1  
 * styled-components 5.2.1  
 
+* [Airbnb eslint](https://github.com/airbnb/javascript)  
+<img src="https://i.imgur.com/A2XaNqc.png"> 
+
 ## Flow chart
 ![](https://upload.cc/i1/2021/03/16/Y1rpj0.png)
 
